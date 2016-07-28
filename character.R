@@ -7,10 +7,9 @@ options(scipen = 999)
 
 library(httr)
 library(jsonlite)
-#library(ggplot2)
 library(dplyr)
 #library(tidyr)
-#library(data.table)
+library(ggplot2)
 
 # Define your workspace: "X:/xxx/"
 #wd <- "D:/github/statistics101/"
@@ -24,16 +23,15 @@ GW2.key <- Sys.getenv("GW2.key")
 
 ## API call wrapped in a function
 f.call.GW2.api <- function(endpoint, version = "v2", key = GW2.key, ...){
+  
   # API address
   GW2.api.base <- "https://api.guildwars2.com/"
+  
   # set up the API query
   GW2.api <- httr::modify_url(
     # pagination goes via query = "page=0" in ... 
     GW2.api.base, path = list(version, endpoint), ...
   )
-  # testing...
-  # modify_url(paste0(GW2.api.base, GW2.api.endpoint), query = list(ids="all", page="0"))
-  # return(GW2.api)
   
   # call API
   r <- httr::GET(GW2.api, add_headers(Authorization = paste0("Bearer ", key)))
@@ -66,9 +64,14 @@ characters <- fromJSON(content(char.r, "text"), flatten = TRUE) #%>% as_tibble()
 
 ### Profession information
 prof.r <- f.call.GW2.api("professions", query = list(ids="all"))
-#content(prof.r, "text")
 
 professions <- fromJSON(content(prof.r, "text"), flatten = TRUE)
+
+
+
+gg <- ggplot()+
+  geom_bar(data = characters, aes(x=race, y=level, fill=profession), stat = "identity")
+gg
 
 
 
