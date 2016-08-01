@@ -65,12 +65,42 @@ characters <- fromJSON(content(char.r, "text"), flatten = TRUE) #%>% as_tibble()
 
 
 
+# backstory
+
+f.get.backstory <- function(charname, char.dta = characters) {
+  
+  # get backstory options of character
+  bksty <- char.dta %>% 
+    filter(name == charname) %>% 
+    select(backstory) %>% 
+    unlist() %>% 
+    unname()
+  
+  # get respective answers
+  answers <- backstory.answers.static %>% 
+    filter(id %in% bksty)
+  
+  # paste all story into one string
+  story <- paste0(
+    "I am ", charname, ".", "\n\n",
+    answers[1, "journal"], " ",
+    answers[2, "journal"], " ",
+    answers[3, "journal"], " ",
+    answers[4, "journal"], " ",
+    answers[5, "journal"]
+  )
+  
+  # change html tags to escape strings
+  story <- gsub("<br>", "\n", story)
+  
+  # return story
+  return(story)
+}
 
 
-
-
-
-
+cat(
+  f.get.backstory("Ghodiva")
+)
 
 
 
