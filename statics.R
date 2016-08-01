@@ -1,17 +1,20 @@
 
-### professions
-prof.r <- f.call.GW2.api("professions", query = list(ids="all"))
-professions <- fromJSON(content(prof.r, "text"), flatten = TRUE)
 
-### backstory
-back.q.r <- f.call.GW2.api("backstory/questions", query = list(ids="all"))
-back.a.r <- f.call.GW2.api("backstory/answers", query = list(ids="all"))
-backstory.questions <- fromJSON(content(back.q.r, "text"), flatten = TRUE)
-backstory.answers <- fromJSON(content(back.a.r, "text"), flatten = TRUE)
+api.endpoints <- c("professions", "backstory/questions", "backstory/answers", "itemstats", "skills")
+#api.endpoints <- c("professions")
 
-### itemstats
-itemstats.r <- f.call.GW2.api("itemstats", query = list(ids="all"))
-itemstats <- fromJSON(content(itemstats.r, "text"), flatten = TRUE)
+
+for(i in api.endpoints){
+  # replace endpoint slash "/" with a dot "."
+  tmp <- gsub("/", ".", i)
+  # store API request
+  assign(paste0(tmp, ".r"), f.call.GW2.api(i, query = list(ids="all")))
+  # push json data into DF
+  assign(paste0(tmp, ".static"), fromJSON(content(get(paste0(tmp, ".r")), "text"), flatten = TRUE))
+}
+
+## lapply works, but I need the names in the list
+# lapply(api.endpoints, f.call.GW2.api, query = list(ids="all"))
 
 
 
