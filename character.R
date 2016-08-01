@@ -80,14 +80,10 @@ f.get.backstory <- function(charname, char.dta = characters) {
   answers <- backstory.answers.static %>% 
     filter(id %in% bksty)
   
-  # paste all story into one string
+  # paste all journal entries into one string
   story <- paste0(
     "I am ", charname, ".", "\n\n",
-    answers[1, "journal"], " ",
-    answers[2, "journal"], " ",
-    answers[3, "journal"], " ",
-    answers[4, "journal"], " ",
-    answers[5, "journal"]
+    answers %>% select(journal) %>% unlist() %>% paste(., collapse = " ")
   )
   
   # change html tags to escape strings
@@ -99,7 +95,7 @@ f.get.backstory <- function(charname, char.dta = characters) {
 
 
 cat(
-  f.get.backstory("Ghodiva")
+  f.get.backstory("Hippocoön")
 )
 
 
