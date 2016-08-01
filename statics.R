@@ -13,20 +13,18 @@ for(i in api.endpoints){
   assign(paste0(tmp, ".static"), fromJSON(content(get(paste0(tmp, ".r")), "text"), flatten = TRUE))
 }
 
-## lapply works, but I need the names in the list
-# lapply(api.endpoints, f.call.GW2.api, query = list(ids="all"))
+# ## lapply works, but I lists of DFs are a special kind of hell...
+# test <- lapply(api.endpoints, f.call.GW2.api, query = list(ids="all"))
+# names(test) <- api.endpoints
+# test2 <- lapply(test, function(x){fromJSON(content(x, "text"), flatten = TRUE)})
+
+# # matches everything NOT ".r$"
+# ls(pattern = "[^\\.r]$")
+
+### store the DFs into an .Rdata
+save(list = ls(pattern = "\\.static$"), file = "GW2-statics.RData")
 
 
 
 
 
-
-
-
-### store everything into an .Rdata
-mget(ls(pattern = ""))
-"GW2-statics.RData"
-
-glob2rx("*.r", trim.head = TRUE)
-
-ls(pattern = "\\.r$")
