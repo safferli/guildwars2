@@ -38,10 +38,6 @@ f.call.GW2.api <- function(endpoint, version = "v2", key = GW2.key, ...){
   return(r)
 }
 
-# TODO: make a package?
-# https://cran.r-project.org/web/packages/httr/vignettes/api-packages.html
-
-
 ## pull all static API calls first
 if(!file.exists("GW2-statics.RData")){
   source(statics.R)
