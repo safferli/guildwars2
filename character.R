@@ -13,7 +13,7 @@ library(ggplot2)
 
 # Define your workspace: "X:/xxx/"
 #wd <- "D:/github/statistics101/"
-wd <- "/home/csafferling/Documents/github/guildwars2"
+wd <- path.expand("~/Documents/github/guildwars2")
 setwd(wd)
 
 ## set your own GW2 key in your ~/.Renviron 
@@ -95,7 +95,7 @@ f.get.backstory <- function(charname, char.dta = characters) {
 
 
 cat(
-  f.get.backstory("Hippocoön")
+  f.get.backstory("Ghodiva")
 )
 
 
