@@ -40,7 +40,7 @@ f.call.GW2.api <- function(endpoint, version = "v2", key = GW2.key, ...){
 
 ## pull all static API calls first
 if(!file.exists("GW2-statics.RData")){
-  source(statics.R)
+  source("statics.R")
 } else {
   load("GW2-statics.RData")
 }
