@@ -1,5 +1,9 @@
 ## all endpoints to query
-api.endpoints <- c("professions", "backstory/questions", "backstory/answers", "itemstats", "skills", "specializations")
+api.endpoints <- c("professions", "backstory/questions", "backstory/answers", "itemstats", "skills", "specializations", "traits", "legends")
+# can't use id="all" for: items
+
+# testing
+#i <- "backstory/answers"
 
 ## loop through endpoints, store reply in $i.r, store result in $i.static
 for(i in api.endpoints){
