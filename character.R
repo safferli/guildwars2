@@ -12,8 +12,8 @@ library(dplyr)
 library(ggplot2)
 
 # Define your workspace: "X:/xxx/"
-#wd <- "D:/github/statistics101/"
-wd <- "/home/csafferling/Documents/github/guildwars2"
+wd <- "c:/github/guildwars2/"
+#wd <- "/home/csafferling/Documents/github/guildwars2"
 setwd(wd)
 
 ## set your own GW2 key in your ~/.Renviron 
@@ -40,7 +40,7 @@ f.call.GW2.api <- function(endpoint, version = "v2", key = GW2.key, ...){
 
 ## pull all static API calls first
 if(!file.exists("GW2-statics.RData")){
-  source(statics.R)
+  source("statics.R")
 } else {
   load("GW2-statics.RData")
 }
