@@ -13,7 +13,7 @@ library(ggplot2)
 
 # Define your workspace: "X:/xxx/"
 wd <- "c:/github/guildwars2/"
-#wd <- "/home/csafferling/Documents/github/guildwars2"
+#wd <- path.expand("~/Documents/github/guildwars2")
 setwd(wd)
 
 ## set your own GW2 key in your ~/.Renviron 
@@ -65,12 +65,38 @@ characters <- fromJSON(content(char.r, "text"), flatten = TRUE) #%>% as_tibble()
 
 
 
+# backstory
+
+f.get.backstory <- function(charname, char.dta = characters) {
+  
+  # get backstory options of character
+  bksty <- char.dta %>% 
+    filter(name == charname) %>% 
+    select(backstory) %>% 
+    unlist() %>% 
+    unname()
+  
+  # get respective answers
+  answers <- backstory.answers.static %>% 
+    filter(id %in% bksty)
+  
+  # paste all journal entries into one string
+  story <- paste0(
+    "I am ", charname, ".", "\n\n",
+    answers %>% select(journal) %>% unlist() %>% paste(., collapse = " ")
+  )
+  
+  # change html tags to escape strings
+  story <- gsub("<br>", "\n", story)
+  
+  # return story
+  return(story)
+}
 
 
-
-
-
-
+cat(
+  f.get.backstory("Ghodiva")
+)
 
 
 
